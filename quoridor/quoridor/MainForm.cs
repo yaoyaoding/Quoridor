@@ -479,6 +479,11 @@ namespace quoridor
                 PlayerWin(winner);
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Author:idy002\nGithub:https://github.com/idy002/Quoridor", "About");
+        }
+
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             bufferedGraphics.Dispose();
