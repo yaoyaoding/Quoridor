@@ -208,8 +208,12 @@ namespace quoridor
                 }
                 else if(mx < d && my >= d)
                 {
-                    if(px < 9 && px + 1 < 9 && !hBoard[px,py] && !hBoard[px+1,py])
+                    if (currentPlayer == Player.Player1 && remainBlock[0] == 0
+                       || currentPlayer == Player.Player2 && remainBlock[1] == 0)
+                        return new Decision(Type.Invalid);
+                    if (px < 9 && px + 1 < 9 && !hBoard[px,py] && !hBoard[px+1,py])
                     {
+
                         hBoard[px, py] = hBoard[px + 1, py] = true;
                         bool result = AccessValid();
                         hBoard[px, py] = hBoard[px + 1, py] = false;
@@ -225,7 +229,10 @@ namespace quoridor
                 }
                 else if(mx >= d && my < d)
                 {
-                    if(py < 9 && py + 1 < 9 && !vBoard[px,py] && !vBoard[px,py+1])
+                    if (currentPlayer == Player.Player1 && remainBlock[0] == 0
+                         || currentPlayer == Player.Player2 && remainBlock[1] == 0)
+                        return new Decision(Type.Invalid);
+                    if (py < 9 && py + 1 < 9 && !vBoard[px,py] && !vBoard[px,py+1])
                     {
                         vBoard[px, py] = vBoard[px, py + 1] = true;
                         bool result = AccessValid();
@@ -269,7 +276,7 @@ namespace quoridor
 
         private void DrawBoard(Graphics gg)
         {
-            double alpha = 0.8;
+            double alpha = 0.7;
             Graphics g = bufferedGraphics.Graphics;
             g.SmoothingMode = SmoothingMode.AntiAlias;
             Color canvasBackColor = buttonCanvasColor.BackColor;
@@ -454,10 +461,14 @@ namespace quoridor
             else if(currentDecision.type == Type.Hor)
             {
                 hBoard[p1.x, p1.y] = hBoard[p2.x, p2.y] = true;
+                if (isplayer1) remainBlock[0]--;
+                else remainBlock[1]--;
             }
             else if(currentDecision.type == Type.Ver)
             {
                 vBoard[p1.x, p1.y] = vBoard[p2.x, p2.y] = true;
+                if (isplayer1) remainBlock[0]--;
+                else remainBlock[1]--;
             }
             if (isplayer1) currentPlayer = Player.Player2;
             else currentPlayer = Player.Player1;
